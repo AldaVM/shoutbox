@@ -10,7 +10,12 @@ class ArticleController {
   async getAll(req, res) {
     const { pageSize, pageNum } = req.query;
 
-    const articles = await _articleService.getAll(+pageSize, +pageNum);
+    console.log(pageSize, pageNum);
+
+    const articles = await _articleService.getAll(
+      +pageSize || 5,
+      +pageNum || 1
+    );
 
     res.json({
       status: 200,
@@ -44,8 +49,9 @@ class ArticleController {
 
   async create(req, res) {
     const { body } = req;
+    const { id } = req.user;
 
-    const article = await _articleService.create(body);
+    const article = await _articleService.create(body, id);
 
     res.status(201).json({
       status: 201,
@@ -57,8 +63,9 @@ class ArticleController {
   async addNewComment(req, res) {
     const { idArticle } = req.params;
     const { body } = req;
+    const { id } = req.user;
 
-    const article = await _articleService.addNewComment(idArticle, body);
+    const article = await _articleService.addNewComment(idArticle, body, id);
 
     res.status(201).json({
       status: 201,

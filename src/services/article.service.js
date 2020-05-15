@@ -13,6 +13,24 @@ class ArticleService extends BaseService {
     _commentService = CommentService;
   }
 
+  async create(body, id) {
+    verifyEntity(body, {
+      status: 400,
+      message: "The body has not been sent",
+    });
+
+    const templateArticle = {
+      name: body.name,
+      slug: body.slug,
+      content: body.content,
+      author: id,
+    };
+
+    const article = await _articleRepository.create(templateArticle);
+
+    return article;
+  }
+
   async getUserArticles(author) {
     verifyEntity(author, {
       status: 400,
@@ -29,7 +47,7 @@ class ArticleService extends BaseService {
     return articles;
   }
 
-  async addNewComment(idArticle, comment) {
+  async addNewComment(idArticle, comment, idUser) {
     const article = await _articleRepository.get(idArticle);
 
     verifyEntity(article, {
@@ -37,11 +55,14 @@ class ArticleService extends BaseService {
       message: "Article is not found",
     });
 
-    const newComment = await _commentService.create(comment);
+    comment.author = idUser;
 
+    const newComment = await _commentService.create(comment);
     article.comments.push(newComment);
 
-    return article;
+    const updateArticle = await _articleRepository.update(article._id, article);
+
+    return updateArticle;
   }
 }
 

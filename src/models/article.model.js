@@ -34,4 +34,9 @@ const ArticleSchema = new Schema({
   ],
 });
 
+ArticleSchema.pre("find", function (next) {
+  this.populate("comments");
+  next();
+});
+
 module.exports = model("article", ArticleSchema);
