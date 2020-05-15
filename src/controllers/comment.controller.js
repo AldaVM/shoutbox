@@ -7,16 +7,6 @@ class CommentController {
     _commentService = CommentService;
   }
 
-  async getAll(req, res) {
-    const comments = await _commentService.getAll();
-
-    res.json({
-      status: 200,
-      message: "List comment",
-      comments,
-    });
-  }
-
   async get(req, res) {
     const { idComment } = req.params;
     const comment = await _commentService.get(idComment);

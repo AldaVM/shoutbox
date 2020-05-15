@@ -8,7 +8,9 @@ class ArticleController {
   }
 
   async getAll(req, res) {
-    const articles = await _articleService.getAll();
+    const { pageSize, pageNum } = req.query;
+
+    const articles = await _articleService.getAll(+pageSize, +pageNum);
 
     res.json({
       status: 200,
@@ -28,7 +30,7 @@ class ArticleController {
     });
   }
 
-  async getUserArticles(author) {
+  async getUserArticles(req, res) {
     const { idAuthor } = req.params;
 
     const articles = await _articleService.getUserArticles(idAuthor);
