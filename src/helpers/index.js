@@ -4,4 +4,5 @@ module.exports = {
   generationToken: require("./generation-token"),
   encryptPassword: require("./encrypt-password.helper"),
   verifyPassword: require("./verify-password.helper"),
+  CACHE_TIME: require("./cache-time.helpers"),
 };

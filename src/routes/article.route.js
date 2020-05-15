@@ -1,10 +1,15 @@
 const { ArticleController } = require("../controllers");
-const { catchAsync, authVerify } = require("../middlewares");
+const { catchAsync, authVerify, cacheMiddleware } = require("../middlewares");
+const { CACHE_TIME } = require("../helpers");
 const { Router } = require("express");
 const router = Router();
 
 router.get("", catchAsync(ArticleController.getAll));
-router.get("/:idArticle", catchAsync(ArticleController.get));
+router.get(
+  "/:idArticle",
+  [cacheMiddleware(CACHE_TIME.ONE_HOUR)],
+  catchAsync(ArticleController.get)
+);
 router.get(
   "/user/:idAuthor",
   [authVerify],
