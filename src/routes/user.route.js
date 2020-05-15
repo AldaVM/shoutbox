@@ -6,7 +6,6 @@ const router = Router();
 router.get("/", catchAsync(UserController.getAll));
 router.get("/:idUser", catchAsync(UserController.get));
 router.get("/:userName/username", catchAsync(UserController.getUserByName));
-router.post("/", catchAsync(UserController.create));
 router.put("/:idUser", catchAsync(UserController.update));
 router.delete("/:idUser", catchAsync(UserController.delete));
 
