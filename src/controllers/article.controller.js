@@ -54,6 +54,19 @@ class ArticleController {
     });
   }
 
+  async addNewComment(req, res) {
+    const { idArticle } = req.params;
+    const { body } = req;
+
+    const article = await _articleService.addNewComment(idArticle, body);
+
+    res.status(201).json({
+      status: 201,
+      message: "Create new commnet in article",
+      article,
+    });
+  }
+
   async update(req, res) {
     const { idArticle } = req.params;
     const { body } = req;

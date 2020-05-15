@@ -11,6 +11,11 @@ router.get(
   catchAsync(ArticleController.getUserArticles)
 );
 router.post("/", [authVerify], catchAsync(ArticleController.create));
+router.post(
+  "/comment/:idArticle",
+  [authVerify],
+  catchAsync(ArticleController.addNewComment)
+);
 router.put("/:idArticle", [authVerify], catchAsync(ArticleController.update));
 router.delete(
   "/:idArticle",
