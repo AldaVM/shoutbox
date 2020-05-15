@@ -10,11 +10,13 @@ class BaseService {
 
     const currentEntry = await this.respository.get(id);
 
+    verifyEntity(id, { status: 404, message: "Registry is not found" });
+
     return currentEntry;
   }
 
-  async getAll() {
-    return await this.respository.getAll();
+  async getAll(pageSize, pageNum) {
+    return await this.respository.getAll(pageSize, pageNum);
   }
 
   async create(entity) {

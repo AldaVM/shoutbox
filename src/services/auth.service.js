@@ -1,5 +1,5 @@
 const { generationToken, verifyEntity, verifyPassword } = require("../helpers");
-const { UserRepository } = require("../repositories");
+const UserService = require("./user.service");
 let _userService = null;
 
 class AuthService {
@@ -12,7 +12,7 @@ class AuthService {
 
     const userExist = await _userService.getUserByName(username);
 
-    verifyEntity(userExist, { status: 401, message: "User already exists" });
+    verifyEntity(!userExist, { status: 401, message: "User already exists" });
 
     return await _userService.create(user);
   }
@@ -41,4 +41,4 @@ class AuthService {
   }
 }
 
-module.exports = new AuthService(UserRepository);
+module.exports = new AuthService(UserService);

@@ -18,11 +18,6 @@ class UserService extends BaseService {
 
     const user = await _userRepository.getUserByName(username);
 
-    verifyEntity(user, {
-      status: 404,
-      message: "The user not found",
-    });
-
     return user;
   }
 
