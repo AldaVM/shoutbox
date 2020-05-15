@@ -1,12 +1,15 @@
 const { CommentController } = require("../controllers");
-const { catchAsync } = require("../middlewares");
+const { catchAsync, authVerify } = require("../middlewares");
 const { Router } = require("express");
 const router = Router();
 
-router.get("/", catchAsync(CommentController.getAll));
 router.get("/:idComment", catchAsync(CommentController.get));
-router.post("/", catchAsync(CommentController.create));
-router.put("/:idComment", catchAsync(CommentController.update));
-router.delete("/:idComment", catchAsync(CommentController.delete));
+router.post("/", [authVerify], catchAsync(CommentController.create));
+router.put("/:idComment", [authVerify], catchAsync(CommentController.update));
+router.delete(
+  "/:idComment",
+  [authVerify],
+  catchAsync(CommentController.delete)
+);
 
 module.exports = router;
