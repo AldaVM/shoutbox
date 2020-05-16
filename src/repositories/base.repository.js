@@ -9,7 +9,13 @@ class BaseRepository {
 
   async getAll(pageSize, pageNum) {
     const skips = pageSize * (pageNum - 1);
-    return await this.model.find().skip(skips).limit(pageSize);
+    const records = await this.model.find().skip(skips).limit(pageSize);
+    const count = await this.model.countDocuments({});
+
+    return {
+      records,
+      count,
+    };
   }
 
   async create(entity) {

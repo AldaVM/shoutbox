@@ -10,8 +10,6 @@ class ArticleController {
   async getAll(req, res) {
     const { pageSize, pageNum } = req.query;
 
-    console.log(pageSize, pageNum);
-
     const articles = await _articleService.getAll(
       +pageSize || 5,
       +pageNum || 1
@@ -37,8 +35,13 @@ class ArticleController {
 
   async getUserArticles(req, res) {
     const { idAuthor } = req.params;
+    const { pageSize, pageNum } = req.query;
 
-    const articles = await _articleService.getUserArticles(idAuthor);
+    const articles = await _articleService.getUserArticles(
+      idAuthor,
+      +pageSize || 5,
+      +pageNum || 1
+    );
 
     res.json({
       status: 200,

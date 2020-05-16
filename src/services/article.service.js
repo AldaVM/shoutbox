@@ -31,15 +31,15 @@ class ArticleService extends BaseService {
     return article;
   }
 
-  async getUserArticles(author) {
+  async getUserArticles(author, pageSize, pageNum) {
     verifyEntity(author, {
       status: 400,
       message: "The author has not been sent",
     });
 
-    const articles = await _articleRepository.getUserArticles(author);
+    const articles = await _articleRepository.getUserArticles(author, pageSize, pageNum);
 
-    verifyEntity(articles.length, {
+    verifyEntity(articles, {
       status: 404,
       message: "Registry is not found",
     });

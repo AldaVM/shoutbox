@@ -17,6 +17,7 @@ const ArticleSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "user",
     required: true,
+    autopopulate: true,
   },
   time_reading: {
     type: Number,
@@ -29,14 +30,11 @@ const ArticleSchema = new Schema({
   comments: [
     {
       type: Schema.Types.ObjectId,
-      ref: "commnet",
+      ref: "comment",
+      autopopulate: true,
     },
   ],
 });
 
-ArticleSchema.pre("find", function (next) {
-  this.populate("comments");
-  next();
-});
-
+ArticleSchema.plugin(require("mongoose-autopopulate"));
 module.exports = model("article", ArticleSchema);

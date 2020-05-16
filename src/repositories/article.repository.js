@@ -9,8 +9,19 @@ class ArticleRepository extends BaseRepository {
     _articleModel = ArticleModel;
   }
 
-  async getUserArticles(author) {
-    return await _articleModel.find({ author });
+  async getUserArticles(author, pageSize, pageNum) {
+    
+    const skips = pageSize * (pageNum - 1);
+    const records = await _articleModel
+      .find({ author })
+      .skip(skips)
+      .limit(pageSize);
+    const count = await _articleModel.countDocuments({ author });
+
+    return {
+      records,
+      count,
+    };
   }
 
   async create(entity) {
