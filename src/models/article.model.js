@@ -5,9 +5,8 @@ const ArticleSchema = new Schema({
     type: String,
     required: [true, "El nombre de artículo es requerido"],
   },
-  slug: {
+  description: {
     type: String,
-    required: [true, "El slug es requerido"],
   },
   content: {
     type: String,

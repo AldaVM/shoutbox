@@ -21,7 +21,7 @@ class ArticleService extends BaseService {
 
     const templateArticle = {
       name: body.name,
-      slug: body.slug,
+      description: body.description,
       content: body.content,
       author: id,
     };
@@ -37,7 +37,11 @@ class ArticleService extends BaseService {
       message: "The author has not been sent",
     });
 
-    const articles = await _articleRepository.getUserArticles(author, pageSize, pageNum);
+    const articles = await _articleRepository.getUserArticles(
+      author,
+      pageSize,
+      pageNum
+    );
 
     verifyEntity(articles, {
       status: 404,
